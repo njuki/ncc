@@ -60,51 +60,53 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Users <span class="caret"></span><span style="font-size:16px;" class="pull-right fa fa-users"></span></a>
           <ul class="dropdown-menu forAnimate" role="menu">
-             <li><a href="<?php echo Yii::app()->createUrl('groups/admin'); ?>">Groups</a></li>
+            
              <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">System Users</a></li>
-             <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Group Permissions</a></li>
+
                          
           </ul>
         </li>
         
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">County Ministries <span class="caret"></span><span style="font-size:16px;" class="pull-right fa fa-bank"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Job Groups <span class="caret"></span><span style="font-size:16px;" class="pull-right fa fa-cubes"></span></a>
           <ul class="dropdown-menu forAnimate" role="menu">
-            <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Create Ministries</a></li>
-             <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Ministries</a></li>
-             <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Org Structure</a></li>
+            <li><a href="<?php echo Yii::app()->createUrl('jobgroups/create'); ?>">Create Job Group</a></li>
+             <li><a href="<?php echo Yii::app()->createUrl('jobgroups/admin'); ?>">Job Groups</a></li>
           </ul>
         </li> 
         
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Job Groups <span class="caret"></span><span style="font-size:16px;" class="pull-right fa fa-cubes"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">County Ministries <span class="caret"></span><span style="font-size:16px;" class="pull-right fa fa-bank"></span></a>
           <ul class="dropdown-menu forAnimate" role="menu">
-            <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Create Job Group</a></li>
-             <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Job Groups</a></li>
+            <li><a href="<?php echo Yii::app()->createUrl('ministries/create'); ?>">Create Ministries</a></li>
+             <li><a href="<?php echo Yii::app()->createUrl('ministries/admin'); ?>">Ministries</a></li>
+            
           </ul>
         </li> 
+        
+        
         
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Job Positions <span class="caret"></span><span style="font-size:16px;" class="pull-right fa fa-2x fa fa-binoculars"></span></a>
           <ul class="dropdown-menu forAnimate" role="menu">
-            <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Create Job Position</a></li>
-             <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Job Positions</a></li>
+            <li><a href="<?php echo Yii::app()->createUrl('jobs/create'); ?>">Create Job Position</a></li>
+             <li><a href="<?php echo Yii::app()->createUrl('jobs/admin'); ?>">Job Positions</a></li>
           </ul>
         </li>
         
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Vacancies <span class="caret"></span><span style="font-size:16px;" class="pull-right fa fa-envelope"></span></a>
           <ul class="dropdown-menu forAnimate" role="menu">
-            <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Create Vacancy</a></li>
-            <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Vacancies</a></li>
-             li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Job Applicants</a></li>
+            <li><a href="<?php echo Yii::app()->createUrl('vacancies/create'); ?>">Create Vacancy</a></li>
+            <li><a href="<?php echo Yii::app()->createUrl('vacancies/admin'); ?>">Vacancies</a></li>
+           
           </ul>
         </li>
         
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Employees <span class="caret"></span><span style="font-size:16px;" class="pull-right fa fa-users"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Job Applicants <span class="caret"></span><span style="font-size:16px;" class="pull-right fa fa-users"></span></a>
           <ul class="dropdown-menu forAnimate" role="menu">
-           <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Create Employee</a></li>
+           <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">View Job Applicants</a></li>
             <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Employees</a></li>
              <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Discipline Incidents</a></li>
             <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Discipline Incident Types</a></li>

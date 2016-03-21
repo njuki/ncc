@@ -48,7 +48,8 @@ $('.search-form form').submit(function(){
 					Add user</a>
 <?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display: none">
-<?php
+
+    <?php
 
 $this->renderPartial ( '_search', array (
 		'model' => $model 
@@ -63,13 +64,18 @@ $this->widget ( 'zii.widgets.grid.CGridView', array (
 		'itemsCssClass' => 'table table-striped custab',
 		'id' => 'users-grid',
 		'dataProvider' => $model->search (),
-		'filter' => $model,
+		
 		'columns' => array (
-				'userID',
-				'groupID',
+				
+                                array(
+                                    'header' => 'Group',
+                                    'value' => '$data->group->groupName',
+                                ),
+				//'groupID',
 				'userName',
 				'fullName',
-				'clientID',
+                                'email',
+				//'clientID',
 				'phoneNo',
 		/*
 		'employeeID',

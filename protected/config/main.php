@@ -44,9 +44,9 @@ return array (
 				),
 				
 				 'db'=>array(
-				 'connectionString' => 'mysql:host=192.168.20.97;dbname=recruitment',
+				 'connectionString' => 'mysql:host=localhost;dbname=recruitment',
 				 'emulatePrepare' => true,
-				 'username' => 'njuki',
+				 'username' => 'root',
 				 'password' => '',
 				 'charset' => 'utf8',
 				 'tablePrefix' => 'tbl_',
