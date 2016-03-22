@@ -22,6 +22,7 @@ $this->menu = array (
 				) 
 		) 
 );
+echo Permissions::isSuperAdmin();
 
 Yii::app ()->clientScript->registerScript ( 'search', "
 $('.search-button').click(function(){
@@ -44,7 +45,34 @@ $('.search-form form').submit(function(){
 				<i class="fa fa-bar-chart-o"></i> Manage Users
 			</h3>
 		</div>
-		<div class="panel-body"><a href="<?php echo Yii::app()->createUrl('users/create'); ?>" class="btn btn-primary btn-s pull-right"><b>+</b>
+		<div class="panel-body">
+		
+		
+		
+		
+		        <?php
+if (Yii::app()->user->hasFlash('success')) {
+?>
+    <div class="alert alert-dismissable alert-success">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <?php echo Yii::app()->user->getFlash('success'); ?>
+</div>
+<?php
+}
+?>
+<?php
+if (Yii::app()->user->hasFlash('error')) {
+?>
+    <div class="alert alert-dismissable alert-danger">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <?php echo Yii::app()->user->getFlash('error'); ?>
+</div>
+<?php
+}
+?>
+		
+		
+		<a title="Create New User" href="<?php echo Yii::app()->createUrl('users/create'); ?>" class="btn btn-primary btn-s pull-right"><b>+</b>
 					Add user</a>
 <?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display: none">
@@ -57,7 +85,6 @@ $this->renderPartial ( '_search', array (
 ?>
 </div>
 			<!-- search-form -->
-
 <?php
 
 $this->widget ( 'zii.widgets.grid.CGridView', array (
@@ -97,10 +124,20 @@ $this->widget ( 'zii.widgets.grid.CGridView', array (
 		array
 (
     'class'=>'CButtonColumn',
-	'htmlOptions' => array('style'=>'width:180px'),
-    'template'=>'{edit}{del}',
+	'htmlOptions' => array('style'=>'width:250px'),
+    'template'=>'{details}{edit}{del}{reset}',
     'buttons'=>array
-    (
+    (	
+    	
+    	'details' => array
+    		(
+    				'label'=>'<span class="glyphicon glyphicon-search"></span> View',
+    				'url'=>'Yii::app()->createUrl("users/view", array("id"=>$data->userID))',
+    				'options'=>array('class'=>'btn btn-success btn-xs',
+    						'title'=>'View Details',
+    						'style'=>'margin-right: 5px'), //HTML options for the button tag.
+    		),
+    	
         'edit' => array
         (
             'label'=>'<span class="glyphicon glyphicon-edit"></span> Edit',
@@ -111,12 +148,21 @@ $this->widget ( 'zii.widgets.grid.CGridView', array (
         ),
 		'del' => array (
 			'label' => '<span class="glyphicon glyphicon-remove"></span> Del',
-			'url' => 'Yii::app()->createUrl("users/update", array("id"=>$data->userID))',
+			'url' => 'Yii::app()->createUrl("users/delete", array("id"=>$data->userID))',
 			'options'=>array('class'=>'btn btn-danger btn-xs',
 					'title'=>'Delete',
-), //HTML options for the button tag.
+					'style'=>'margin-right: 5px'
+),
 				
 		),
+    		'reset' => array
+    		(
+    				'label'=>'<span class="glyphicon glyphicon-lock"></span> Reset',
+    				'url'=>'Yii::app()->createUrl("users/resetpassword", array("id"=>$data->userID))',
+    				'options'=>array('class'=>'btn btn-warning btn-xs',
+    						'title'=>'Reset Password',
+    						'style'=>'margin-right: 5px'), //HTML options for the button tag.
+    		),
     ),
 ),
 		) 

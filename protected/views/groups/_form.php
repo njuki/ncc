@@ -4,10 +4,11 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="form">
+<div class="form" style="width: 400px">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'groups-form',
+	'htmlOptions' => array('role'=>'form'),
 	'enableAjaxValidation'=>false,
 )); ?>
 
@@ -15,56 +16,27 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->labelEx($model,'groupName'); ?>
-		<?php echo $form->textField($model,'groupName',array('size'=>50,'maxlength'=>50)); ?>
+		<?php echo $form->textField($model,'groupName',array('size'=>50,'maxlength'=>50,  'class'=>'form-control')); ?>
 		<?php echo $form->error($model,'groupName'); ?>
 	</div>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textField($model,'description',array('size'=>60,'maxlength'=>100)); ?>
+		<?php echo $form->textArea($model,'description',array('size'=>60,'maxlength'=>100,  'class'=>'form-control')); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
-
-	<div class="row">
+	
+		<?php if(!$model->isNewRecord) {?>
+		<div class="form-group">
 		<?php echo $form->labelEx($model,'recordStatus'); ?>
-		<?php echo $form->textField($model,'recordStatus'); ?>
+		<?php echo $form->dropDownList($model, 'recordStatus', array('0'=>'No', '1'=>'Yes'), array('prompt' => 'Please select status', 'class'=>'form-control', 'style'=>'padding:0; height: 30px')); ?>
 		<?php echo $form->error($model,'recordStatus'); ?>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'createdBy'); ?>
-		<?php echo $form->textField($model,'createdBy',array('size'=>11,'maxlength'=>11)); ?>
-		<?php echo $form->error($model,'createdBy'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'updatedBy'); ?>
-		<?php echo $form->textField($model,'updatedBy',array('size'=>11,'maxlength'=>11)); ?>
-		<?php echo $form->error($model,'updatedBy'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'dateCreated'); ?>
-		<?php echo $form->textField($model,'dateCreated'); ?>
-		<?php echo $form->error($model,'dateCreated'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'dateUpdated'); ?>
-		<?php echo $form->textField($model,'dateUpdated'); ?>
-		<?php echo $form->error($model,'dateUpdated'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'isEditable'); ?>
-		<?php echo $form->textField($model,'isEditable'); ?>
-		<?php echo $form->error($model,'isEditable'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+	<?php }?>
+	<div class="form-group">
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save', array('class'=>'btn btn-info')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

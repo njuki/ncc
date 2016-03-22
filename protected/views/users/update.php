@@ -24,7 +24,7 @@ $this->menu=array(
 			</h3>
 		</div>
 		<div class="panel-body">
-			<a href="<?php echo Yii::app()->createUrl('users/create'); ?>"
+			<a href="<?php echo Yii::app()->createUrl('users/admin'); ?>"
 				class="btn btn-primary btn-s pull-right"><i class="fa fa-backward"></i> Back to Users</a>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

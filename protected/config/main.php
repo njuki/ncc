@@ -18,7 +18,8 @@ return array (
 		// autoloading model and component classes
 		'import' => array (
 				'application.models.*',
-				'application.components.*' 
+				'application.components.*',
+				'application.libraries.*',
 		),
 		
 		// modules
@@ -40,14 +41,14 @@ return array (
 		'components' => array (
 				'user' => array (
 						// enable cookie-based authentication
-						'allowAutoLogin' => true 
+						'allowAutoLogin' => true
 				),
 				
 				 'db'=>array(
 				 'connectionString' => 'mysql:host=localhost;dbname=recruitment',
 				 'emulatePrepare' => true,
 				 'username' => 'root',
-				 'password' => '',
+				 'password' => 'r00t',
 				 'charset' => 'utf8',
 				 'tablePrefix' => 'tbl_',
 				 ),

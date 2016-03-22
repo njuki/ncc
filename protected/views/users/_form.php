@@ -51,6 +51,13 @@
 		<?php echo $form->dropDownList($model, 'employeeID', CHtml::listData(Departments::model()->findAll(), 'departmentID', 'departmentName'), array('prompt' => 'Please select department', 'class'=>'form-control', 'style'=>'padding:0; height: 30px')); ?>
 		<?php echo $form->error($model,'departmentID'); ?>
 	</div>
+	<?php if(!$model->isNewRecord) {?>
+		<div class="form-group">
+		<?php echo $form->labelEx($model,'active'); ?>
+		<?php echo $form->dropDownList($model, 'active', array('0'=>'No', '1'=>'Yes'), array('prompt' => 'Please select status', 'class'=>'form-control', 'style'=>'padding:0; height: 30px')); ?>
+		<?php echo $form->error($model,'active'); ?>
+	</div>
+	<?php }?>
 
 	<div class="form-group">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save', array('class'=>'btn btn-info')); ?>

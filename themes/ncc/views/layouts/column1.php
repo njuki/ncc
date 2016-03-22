@@ -56,17 +56,20 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
       <ul class="nav navbar-nav side">
+       <?php if (Permissions::isBoardMember()) {?>   
         <li class="active"><a href="<?php echo Yii::app()->createUrl('/'); ?>">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+        <?php } ?>
+        <?php if (Permissions::isSuperAdmin()) { ?>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Users <span class="caret"></span><span style="font-size:16px;" class="pull-right fa fa-users"></span></a>
           <ul class="dropdown-menu forAnimate" role="menu">
             
              <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">System Users</a></li>
-
-                         
+             <li><a href="<?php echo Yii::app()->createUrl('groups/admin'); ?>">User groups</a></li>          
           </ul>
         </li>
-        
+        <?php } ?>
+        <?php if (Permissions::isSecretariate()) {?>   
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Job Groups <span class="caret"></span><span style="font-size:16px;" class="pull-right fa fa-cubes"></span></a>
           <ul class="dropdown-menu forAnimate" role="menu">
@@ -113,9 +116,9 @@
              <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Disciplinary Actions</a></li>
             <li><a href="<?php echo Yii::app()->createUrl('users/admin'); ?>">Document Types</a></li>
           </ul>
-        </li>                          
-        
-                    
+        </li>   
+        <?php }?>                   
+     
        </ul>
     </div>
   </div>

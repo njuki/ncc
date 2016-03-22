@@ -32,7 +32,7 @@ class UsersController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update', 'resetpassword', 'delete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -62,21 +62,68 @@ class UsersController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Users;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
+		$model=new Users;                                                                       
 		if(isset($_POST['Users']))
 		{
+			//generate a passwrd for the user
+			$emailSend = new EMailSender();
+			$password = $emailSend->generatePassword(6, 1);
+			$model->password = SHA1($password);
+			
 			$model->attributes=$_POST['Users'];
-			if($model->save())
+			if($model->save()){
+				$data = array(
+						'emailAddress' => $model->email,
+						'fullNames' => $model->fullName,
+						'userName' => $model->userName,
+						'password' => $password
+				);
+				//send the user details to the usr
+				$sendDetails = $this->prepareUserDetails($data);
+				Yii::app()->user->setFlash('success', 'User has been created successfully and credentials emailed.');
 				$this->redirect(array('view','id'=>$model->userID));
+			}
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
 		));
+	}
+	
+	public function prepareUserDetails($data) {
+	
+		$pass = new EMailSender();
+	
+		$to = $data['emailAddress'];
+		// $body ="Dear ".$email->fullNames." \n Your password has been reset successfully as ".$password;
+	
+		$body = '<p><span style="font-family:Trebuchet MS, Verdana, Arial; font-size:17px; font-weight:bold;"> Dear ' . $data['fullNames'] . '</span>,</p>
+                                            <br />
+                                            <div>You have successfully been registered successfully on NCC Portal.</div>
+                                            <p>Your credentials are</p>
+                                            <br />
+                                            <div style="padding-left:20px; padding-bottom:10px;">&nbsp;&nbsp;&nbsp;Username -<b> ' . $data['userName'] . '</b></div>
+                                            <div style="padding-left:20px; padding-bottom:10px;">&nbsp;&nbsp;&nbsp;Password - <b>' . $data['password'] . '</b></div>
+	
+	
+                                            <br />
+                                            <div>Thankyou</div>
+                                            <br />
+                                            <div style="color:blue"><i>NCC Portal</i></div>
+                       
+                                             ';
+	
+	
+	
+		$subject = "User Creation information";
+		$name = $data['fullNames'];
+	
+		$send = $pass->sendEmail($subject, $to, $name, $body);
+		if ($send) {
+			return true;
+		} else {
+			return FALSE;
+		}
 	}
 
 	/**
@@ -94,8 +141,10 @@ class UsersController extends Controller
 		if(isset($_POST['Users']))
 		{
 			$model->attributes=$_POST['Users'];
-			if($model->save())
+			if($model->save()) {
+				Yii::app()->user->setFlash('success', 'User details update successfully.');
 				$this->redirect(array('view','id'=>$model->userID));
+			}
 		}
 
 		$this->render('update',array(
@@ -103,6 +152,78 @@ class UsersController extends Controller
 		));
 	}
 
+	public function actionResetPassword() {
+		$pass = new EMailSender();
+		$model = new LoginForm;
+	
+		$userID = $_GET['id'];
+	
+		$email = Users::model()->findByAttributes(array('userID' => $userID));
+	
+	
+	
+		$password = $pass->generatePassword(6, 2);
+	
+	
+		$updatepass = $this->savePassword(sha1($password), $userID);
+	
+		$to = $email->email;
+		// $body ="Dear ".$email->fullNames." \n Your password has been reset successfully as ".$password;
+	
+		$body = '</p><span style="font-family:Trebuchet MS, Verdana, Arial; font-size:17px; font-weight:bold;"> Dear ' . $email->fullName . '</span>,</p>
+                                            <br />
+                                            <div>Your password for NCC Portal was successfully reset.</div>
+                                            <p>Your new password is </p>
+                                            <br />
+                                            <div style="padding-left:20px; padding-bottom:10px;">&nbsp;&nbsp;&nbsp;New password - <b>' . $password . '</b></div>
+	
+	
+                                            <br />
+                                            <div>Stay Logged</div>
+                                            <br />
+                                            <div style="color:blue"><i>NCC Portal</i></div>
+                       
+                                             ';
+	
+	
+	
+		$subject = "Password reset information";
+		$name = $email->fullName;
+	
+		$send = $pass->sendEmail($subject, $to, $name, $body);
+		//$send = $pass->emailSend($to, $message, $subject);
+	
+		$userdet = array('username' => $email->userName, 'FullNames' => $email->fullName, 'UserID' => $userID, ' Email' => $email->email, ' ResetBy' => Yii::app()->user->name);
+	
+		//$this->flog("USER PASSWORD RESET SUCCESS", 'INFO', "The password for the user was reset successfully and sent on mail. Details:- " . CJSON::encode($userdet));
+	
+		if (Yii::app()->request->isAjaxRequest) {
+	
+	
+			echo CJSON::encode(array(
+					'status' => 'success',
+					'div' => 'update successful',
+			));
+			exit;
+		} else {
+			Yii::app()->user->setFlash('success', 'Your password has been reset successfully. Check mail');
+	
+	
+	
+			$this->redirect('../users/admin', array('model' => $model));
+		}
+	}
+	
+
+	public function savePassword($pass, $userid) {
+	
+		$sql = "UPDATE users SET password ='$pass' WHERE userID =$userid ";
+		$oDbConnection = Yii::app()->db;
+		$oCommand = $oDbConnection->createCommand($sql);
+		$dataProvider = $oCommand->execute();
+	
+		return $dataProvider;
+	}
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.

@@ -43,6 +43,7 @@ class Groups extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('groupName, createdBy, dateCreated', 'required'),
+			array('groupName', 'unique'),
 			array('recordStatus, isEditable', 'numerical', 'integerOnly'=>true),
 			array('groupName', 'length', 'max'=>50),
 			array('description', 'length', 'max'=>100),
@@ -74,7 +75,7 @@ class Groups extends CActiveRecord
 			'groupID' => 'Group',
 			'groupName' => 'Group Name',
 			'description' => 'Description',
-			'recordStatus' => 'Record Status',
+			'recordStatus' => 'Active',
 			'createdBy' => 'Created By',
 			'updatedBy' => 'Updated By',
 			'dateCreated' => 'Date Created',

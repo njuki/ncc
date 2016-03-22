@@ -54,6 +54,7 @@ class Users extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('userName, email, groupID, active', 'required'),
 			array('clientID, departmentID', 'numerical', 'integerOnly'=>true),
 			array('groupID, employeeID, createdBy, updatedBy', 'length', 'max'=>11),
 			array('userName, fullName, question, answer', 'length', 'max'=>30),
@@ -64,7 +65,7 @@ class Users extends CActiveRecord
 			array('dateLastLogin, dateCreated, dateUpdated', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('userID, groupID, userName, fullName, clientID, phoneNo, employeeID, email, departmentID, password, passwordStatus, passwordAttempts, dateLastLogin, recordStatus, passwordCanExpire, question, answer, createdBy, updatedBy, dateCreated, dateUpdated', 'safe', 'on'=>'search'),
+			array('userID, groupID, userName, fullName, clientID, phoneNo, employeeID, email, departmentID, password, passwordStatus, passwordAttempts, dateLastLogin, recordStatus, passwordCanExpire, question, answer, createdBy, updatedBy, dateCreated, dateUpdated, active', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -146,5 +147,15 @@ class Users extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	
+	/**
+	 * Checks if the given password is correct.
+	 * @param string the password to be validated
+	 * @return boolean whether the password is valid
+	 */
+	public function validatePassword($password)
+	{
+		return sha1($password)==$this->password;
 	}
 }

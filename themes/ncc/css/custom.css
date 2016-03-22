@@ -165,3 +165,7 @@
   .side li a {
   color: #000 !important
   }
+
+span.required {
+  color: red;
+  }

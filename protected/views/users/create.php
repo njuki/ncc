@@ -27,7 +27,7 @@ $this->menu = array (
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				<i class="fa fa-bar-chart-o"></i> Manage Users
+				<i class="fa fa-bar-chart-o"></i> Create User
 			</h3>
 		</div>
 		<div class="panel-body">

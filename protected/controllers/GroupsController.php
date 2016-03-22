@@ -70,8 +70,13 @@ class GroupsController extends Controller
 		if(isset($_POST['Groups']))
 		{
 			$model->attributes=$_POST['Groups'];
-			if($model->save())
+			$model->dateCreated = new CDbExpression('NOW()');
+			$model->createdBy = Yii::app()->user->id;
+			
+			if($model->save()) {
+				Yii::app()->user->setFlash('success', 'Group has been created successfully.');
 				$this->redirect(array('view','id'=>$model->groupID));
+			}
 		}
 
 		$this->render('create',array(
@@ -94,8 +99,10 @@ class GroupsController extends Controller
 		if(isset($_POST['Groups']))
 		{
 			$model->attributes=$_POST['Groups'];
-			if($model->save())
+			if($model->save()) {
+				Yii::app()->user->setFlash('success', 'Group has been updated successfully.');
 				$this->redirect(array('view','id'=>$model->groupID));
+			}
 		}
 
 		$this->render('update',array(
